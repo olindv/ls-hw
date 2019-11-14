@@ -14,7 +14,7 @@
  */
 
 function returnFirstArgument(someArgument) {
-  return someArgument;
+    return someArgument;
 }
 
 returnFirstArgument(10);
@@ -35,9 +35,9 @@ returnFirstArgument('привет');
    sumWithDefaults(10) вернет 110
  */
 function sumWithDefaults(a, b = 100) {
-  var result = a + b;
+    var result = a + b;
 
-  return result;
+    return result;
 }
 
 sumWithDefaults(10, 20);
@@ -52,7 +52,7 @@ sumWithDefaults(10);
    returnFnResult(() => 'привет') вернет 'привет'
  */
 function returnFnResult(fn) {
-  return fn();
+    return fn();
 }
 
 returnFnResult(() => 'alloha');
@@ -71,20 +71,20 @@ returnFnResult(() => 'alloha');
    console.log(f()); // выведет 13
  */
 function returnCounter(number = 0) {
-  var counter = 0;
+    var counter = 0;
 
-  return function f() {
-    counter += 1;
+    return function f() {
+        counter += 1;
 
-    return number + counter;
-  };
+        return number + counter;
+    };
 }
 
 var f = returnCounter();
 
-console.log(f());
-console.log(f());
-console.log(f());
+f();
+f();
+f();
 
 /*
  Задание 5 *:
@@ -96,18 +96,18 @@ console.log(f());
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
 function returnArgumentsArray() {
-  var newArray = [];
-  
-  for (var i = 0; i<arguments.length; i++) {
-    newArray.push(arguments[i]);
-  } // способ №1
+    var newArray = [];
 
-  // var newArray = [...arguments]; // способ №2
-  
-  return newArray;
+    for (var i = 0; i < arguments.length; i++) {
+        newArray.push(arguments[i]);
+    } // способ №1
+
+    // var newArray = [...arguments]; // способ №2
+
+    return newArray;
 }
 
-returnArgumentsArray(1, 2, 3, 'dfs', 432, [23, 56, 'af'])
+returnArgumentsArray(1, 2, 3, 'dfs', 432, [23, 56, 'af']);
 
 /*
  Задание 6 *:
@@ -124,13 +124,23 @@ returnArgumentsArray(1, 2, 3, 'dfs', 432, [23, 56, 'af'])
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {}
+function bindFunction(fn) {
+    return fn.bind(...arguments);
+}
+
+function sum(a, b) {
+    return a + b;
+}
+
+var newSum = bindFunction(sum, 2, 4);
+
+newSum();
 
 export {
-  returnFirstArgument,
-  sumWithDefaults,
-  returnArgumentsArray,
-  returnFnResult,
-  returnCounter,
-  bindFunction
+    returnFirstArgument,
+    sumWithDefaults,
+    returnArgumentsArray,
+    returnFnResult,
+    returnCounter,
+    bindFunction
 };
