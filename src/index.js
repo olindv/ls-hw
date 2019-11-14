@@ -12,8 +12,13 @@
 
  Другими словами: функция должна возвращать в неизменном виде то, что поступает ей на вход
  */
-function returnFirstArgument() {
+
+function returnFirstArgument(someArgument) {
+  return someArgument;
 }
+
+returnFirstArgument(10);
+returnFirstArgument('привет');
 
 /*
  Задание 2:
@@ -29,9 +34,15 @@ function returnFirstArgument() {
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b) {
+function sumWithDefaults(a, b = 100) {
+  var result = a + b;
+
+  return result;
 }
 
+sumWithDefaults(10, 20);
+sumWithDefaults(2, 4);
+sumWithDefaults(10);
 /*
  Задание 3:
 
@@ -41,7 +52,10 @@ function sumWithDefaults(a, b) {
    returnFnResult(() => 'привет') вернет 'привет'
  */
 function returnFnResult(fn) {
+  return fn();
 }
+
+returnFnResult(() => 'alloha');
 
 /*
  Задание 4:
@@ -56,8 +70,21 @@ function returnFnResult(fn) {
    console.log(f()); // выведет 12
    console.log(f()); // выведет 13
  */
-function returnCounter(number) {
+function returnCounter(number = 0) {
+  var counter = 0;
+
+  return function f() {
+    counter += 1;
+
+    return number + counter;
+  };
 }
+
+var f = returnCounter();
+
+console.log(f());
+console.log(f());
+console.log(f());
 
 /*
  Задание 5 *:
@@ -69,7 +96,18 @@ function returnCounter(number) {
    returnArgumentsArray(1, 2, 3) вернет [1, 2, 3]
  */
 function returnArgumentsArray() {
+  var newArray = [];
+  
+  for (var i = 0; i<arguments.length; i++) {
+    newArray.push(arguments[i]);
+  } // способ №1
+
+  // var newArray = [...arguments]; // способ №2
+  
+  return newArray;
 }
+
+returnArgumentsArray(1, 2, 3, 'dfs', 432, [23, 56, 'af'])
 
 /*
  Задание 6 *:
@@ -86,14 +124,13 @@ function returnArgumentsArray() {
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {
-}
+function bindFunction(fn) {}
 
 export {
-    returnFirstArgument,
-    sumWithDefaults,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+  returnFirstArgument,
+  sumWithDefaults,
+  returnArgumentsArray,
+  returnFnResult,
+  returnCounter,
+  bindFunction
+};
