@@ -124,7 +124,16 @@ returnArgumentsArray(1, 2, 3, 'dfs', 432, [23, 56, 'af'])
 
    console.log(newSum()) выведет 6
  */
-function bindFunction(fn) {}
+function bindFunction(fn) {
+  return fn.bind(...arguments);
+}
+
+function sum(a, b) {
+  
+  return a + b;
+}
+
+var newSum = bindFunction(sum, 2, 15);
 
 export {
   returnFirstArgument,
