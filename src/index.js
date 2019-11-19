@@ -6,7 +6,6 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
-
 function forEach(array, fn) {
     for (let i = 0; i < array.length; i++) {
 
@@ -38,7 +37,6 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
-
     let i = 0;
     let accamulator = initial || array[i++];
 
@@ -79,7 +77,7 @@ function slice(array, from, to) {
     let firstValue = 0;
     let arrLength = array.length;
     let lastValue = arrLength;
-  
+
     if (from === 0 && to === 0 || from >= arrLength) {
         return []
     }
@@ -96,16 +94,13 @@ function slice(array, from, to) {
     } else if (from === 0) {
         firstValue = 0;
     } 
-  
     if (to < 0) {
         lastValue = arrLength - Math.abs(to);
-  
     } else if (to > 0) {
         lastValue = Math.abs(to);
     } else if (to === 0) {
         lastValue = 0;
     } 
-
     for (let i = firstValue; i < lastValue; i++) {
         newArr.push(array[i]);
     }
@@ -142,7 +137,6 @@ function createProxy(obj) {
 
     return obj;
 }
-
 newObj = createProxy(newObj);
 
 export {
