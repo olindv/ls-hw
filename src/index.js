@@ -75,6 +75,43 @@ function upperProps(obj) {
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
 function slice(array, from, to) {
+    let newArr = [];
+    let firstValue = 0;
+    let arrLength = array.length;
+    let lastValue = arrLength;
+  
+    if (from === 0 && to === 0 || from >= arrLength) {
+        return []
+    }
+    if (to > arrLength) {
+        to = arrLength;
+    }
+    if (Math.abs(from) >= arrLength) {
+        from = 0;
+    }
+    if (from < 0) {
+        firstValue = arrLength - Math.abs(from);
+    } else if (from > 0) {
+        firstValue = Math.abs(from);
+    } else if (from === 0) {
+        firstValue = 0;
+    } 
+  
+    if (to < 0) {
+        lastValue = arrLength - Math.abs(to);
+  
+    } else if (to > 0) {
+        lastValue = Math.abs(to);
+    } else if (to === 0) {
+        lastValue = 0;
+    } 
+
+    for (let i = firstValue; i < lastValue; i++) {
+        newArr.push(array[i]);
+    }
+  
+    return newArr;
+    
 }
   
 // var arr = [1, 5, 464, 22, 8, 'jbubu', 343, 66, 32, 35];
@@ -88,8 +125,25 @@ function slice(array, from, to) {
  Функция принимает объект и должна вернуть Proxy для этого объекта
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
+// eslint-disable-next-line no-unused-vars
+let newObj = {};
+
 function createProxy(obj) {
+    obj = new Proxy(obj, {
+        set(target, prop, val) {
+            if (typeof val == 'number') {
+                target[prop] = val * val;
+
+                return true;
+            } 
+            
+        }
+    });
+
+    return obj;
 }
+
+newObj = createProxy(newObj);
 
 export {
     forEach,
