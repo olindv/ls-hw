@@ -105,14 +105,8 @@ function slice(array, from, to) {
         newArr.push(array[i]);
     }
   
-    return newArr;
-    
+    return newArr;   
 }
-  
-// var arr = [1, 5, 464, 22, 8, 'jbubu', 343, 66, 32, 35];
-
-// slice(arr, 1, 5);
-//   console.log(slice(arr, 1, 5));
 
 /*
  Задание 6 *:
@@ -124,7 +118,7 @@ function slice(array, from, to) {
 let newObj = {};
 
 function createProxy(obj) {
-    obj = new Proxy(obj, {
+    return new Proxy(obj, {
         set(target, prop, val) {
             if (typeof val == 'number') {
                 target[prop] = val * val;
@@ -134,8 +128,6 @@ function createProxy(obj) {
             
         }
     });
-
-    return obj;
 }
 newObj = createProxy(newObj);
 
