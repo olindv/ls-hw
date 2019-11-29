@@ -13,7 +13,6 @@
 function createDivWithText(text) {
     const elem = document.createElement('div');
     
-    document.body.appendChild(elem);
     elem.textContent = text;
 
     return elem;
@@ -28,10 +27,7 @@ function createDivWithText(text) {
    prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
 function prepend(what, where) {
-    let elem = where;
-    let elemTwo = what;
-
-    elem.prepend(elemTwo);
+    where.prepend(what);
 }
 
 /*
@@ -55,14 +51,10 @@ function prepend(what, where) {
  */
 function findAllPSiblings(where) {
     let arr = [];
-    let children = where.children;
+    let el = where.getElementsByTagName('p');
 
-    for (let element of children) { 
-        let elemSibl = element.previousElementSibling;
-
-        if (element.tagName === 'P') {
-            arr.push(elemSibl);
-        }
+    for (let element of el) { 
+        arr.push(element.previousElementSibling)
     }
     
     return arr;
@@ -162,49 +154,54 @@ function deleteTextNodesRecursive(where) {
      texts: 3
     }
  */
-// let obj = {
-//     tags: {},
-//     classes: {},
-//     text: null
-// };
 function collectDOMStat(root) {
-    // let rootNodes = root.childNodes;
+    let rootNodes = root.childNodes;
+    let obj = {
+        tags: {},
+        classes: {},
+        texts: null
+    };
 
-    // for (let i = 0; i < rootNodes.length; i++) {
-    //     let el = rootNodes[i];
-        
-    //     if (el.nodeType === 3) {
-    //         if (obj.text) {
-    //             obj.text = obj.text + 1;
-    //         } else {
-    //             obj.text = 1;
-    //         }
-    //     }
+    function handleRecursive(foo) {
+        foo.forEach(element => handleFilter(element));
+    }
 
-    //     if (el.tagName) {
-    //         if (obj.tags[el.tagName]) {
-    //             obj.tags[el.tagName] = obj.tags[el.tagName] + 1;
-    //         } else {
-    //             obj.tags[el.tagName] = 1;
-    //         }
-    //     }
+    handleRecursive(rootNodes);
 
-    //     if (el.classList) {
-    //         for (let i = 0; i < el.classList.length; i++) {
-    //             if (obj.classes[el.classList[i]]) {
-    //                 obj.classes[el.classList[i]] = obj.classes[el.classList[i]] + 1;
-    //             } else {
-    //                 obj.classes[el.classList[i]] = 1;
-    //             }
-    //         }
-    //     }
+    function handleFilter(itemChild) {
+        if (itemChild.nodeType === 3) {
+            if (obj.texts) {
+                obj.texts = obj.texts + 1;
+            } else {
+                obj.texts = 1;
+            }
+        }
 
-    //     if (el && el.childNodes) {
-    //         collectDOMStat(el);
-    //     }
-    // }
+        if (itemChild.tagName) {
+            if (obj.tags[itemChild.tagName]) {
+                obj.tags[itemChild.tagName] = obj.tags[itemChild.tagName] + 1;
+            } else {
+                obj.tags[itemChild.tagName] = 1;
+            }
+        }
 
-    // return obj
+        if (itemChild.classList) {
+            for (let i = 0; i < itemChild.classList.length; i++) {
+                if (obj.classes[itemChild.classList[i]]) {
+                    obj.classes[itemChild.classList[i]] = obj.classes[itemChild.classList[i]] + 1;
+                } else {
+                    obj.classes[itemChild.classList[i]] = 1;
+                }
+            }
+        }
+
+        if (itemChild) {
+            handleRecursive(itemChild.childNodes);
+            
+        }
+    }
+    
+    return obj;
 }
 
 /*
@@ -240,6 +237,28 @@ function collectDOMStat(root) {
    }
  */
 function observeChildNodes(where, fn) {
+    const config = {
+        childList: true,
+        subtree: true
+    };
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.removedNodes.length) {
+                fn({
+                    type: 'remove',
+                    nodes: [...mutation.removedNodes]
+                });
+            }
+            if (mutation.addedNodes.length) {
+                fn({
+                    type: 'insert',
+                    nodes: [...mutation.addedNodes]
+                });
+            }
+        });
+    });
+
+    observer.observe(where, config);
 }
 
 export {
