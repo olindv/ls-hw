@@ -16,7 +16,7 @@ function delayPromise(seconds) {
         }, seconds * 1000);
     })
 
-    return promise.then(() => { /* ...*/ })
+    return promise
 }
 
 /*
