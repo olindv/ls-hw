@@ -1,4 +1,4 @@
-## LoftSchool example project
+## Решение задачек по JS
 
 ### Доступные команды
 
